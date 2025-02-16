@@ -32,7 +32,7 @@ function parseData(data: ArrayBuffer) {
   console.log('boxes:', boxes);
 }
 
-// Parses major boxes (without nesting)
+// Parses boxes (with nesting)
 function parseBoxes(view: DataView, offset: number, end: number) {
   const boxes: Box[] = [];
   const boxDefinitionSize = 8; // 4 size, 4 type
