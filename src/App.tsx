@@ -8,8 +8,14 @@ function parseData(data: ArrayBuffer) {
   for (let i = 0; i < length; i++) {
     result[i] = view.getUint8(i);
   }
-  return result;
+
+  const sizeOf1Box = view.getUint32(0);
+  const typeOf1Box = view.getUint32(4);
+
+  console.log('sizeOf1Box:', sizeOf1Box, typeOf1Box);
   
+
+  return result;
 }
 
 function App() {
