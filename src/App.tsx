@@ -23,13 +23,15 @@ interface BoxWithData extends BasicBox {
 type Box = BasicBox | BoxWithChildren | BoxWithData;
 
 
-function parseData(data: ArrayBuffer) {
+function parseData(data: ArrayBuffer): Box[] {
   const view = new DataView(data);
   const length = view.byteLength;
 
   const boxes: Box[] = parseBoxes(view, 0, length);
 
   console.log('boxes:', boxes);
+
+  return boxes;
 }
 
 
