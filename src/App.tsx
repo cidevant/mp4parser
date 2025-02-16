@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
+
 interface Box {
   size: number;
   type: string;
   offset: number;
+}
+
+interface BoxWithChildren extends Box {
+  children: Box[];
 }
 
 function parseData(data: ArrayBuffer) {
