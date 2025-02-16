@@ -20,7 +20,7 @@ interface BoxWithData extends BasicBox {
   data?: string;
 }
 
-type Box = BoxWithChildren | BoxWithData;
+type Box = BasicBox | BoxWithChildren | BoxWithData;
 
 
 function parseData(data: ArrayBuffer) {
@@ -32,18 +32,28 @@ function parseData(data: ArrayBuffer) {
   console.log('boxes:', boxes);
 }
 
+
 // Parses boxes (with nesting)
-function parseBoxes(view: DataView, offset: number, end: number) {
+function parseBoxes(view: DataView, offset: number, end: number): Box[] {
   const boxes: Box[] = [];
   const boxDefinitionSize = 8; // 4 size, 4 type
 
   while (offset < end) {
     let box = parseBox(view, offset) as Box;
 
-    // Parse children if box is MOOF or TRAF
-    if (box.type === BoxType.MOOF || box.type === BoxType.TRAF) {
-      const children = parseBoxes(view, offset + boxDefinitionSize, offset + box.size);
-      box = { ...box, children } as BoxWithChildren;
+    switch (box.type) {
+      case BoxType.MOOF:
+      case BoxType.TRAF: {
+        const children = parseBoxes(view, offset + boxDefinitionSize, offset + box.size);
+        box = { ...box, children } as BoxWithChildren;
+      }
+      break;
+      
+      case BoxType.MDAT: {
+        const data = new Uint8Array(view.buffer, offset + boxDefinitionSize, box.size - boxDefinitionSize);
+        box = { ...box, data: new TextDecoder().decode(data) } as BoxWithData;
+      }
+      break;
     }
 
     boxes.push(box);
@@ -55,7 +65,7 @@ function parseBoxes(view: DataView, offset: number, end: number) {
 }
 
 // Parses 8 bytes of data to get box size and type
-function parseBox(view: DataView, offset: number) {
+function parseBox(view: DataView, offset: number): Box {
   const size = view.getUint32(offset); // first 4 bytes represent size
   let type = "";
 
