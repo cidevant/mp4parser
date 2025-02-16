@@ -26,7 +26,6 @@ type Box = BoxWithChildren | BoxWithData;
 function parseData(data: ArrayBuffer) {
   const view = new DataView(data);
   const length = view.byteLength;
-  const boxDefinitionSize = 8; // 4 size, 4 type
 
   const boxes: Box[] = parseBoxes(view, 0, length);
 
@@ -36,9 +35,16 @@ function parseData(data: ArrayBuffer) {
 // Parses major boxes (without nesting)
 function parseBoxes(view: DataView, offset: number, end: number) {
   const boxes: Box[] = [];
+  const boxDefinitionSize = 8; // 4 size, 4 type
 
   while (offset < end) {
-    const box = parseBox(view, offset);
+    let box = parseBox(view, offset) as Box;
+
+    // Parse children if box is MOOF or TRAF
+    if (box.type === BoxType.MOOF || box.type === BoxType.TRAF) {
+      const children = parseBoxes(view, offset + boxDefinitionSize, offset + box.size);
+      box = { ...box, children } as BoxWithChildren;
+    }
 
     boxes.push(box);
     
