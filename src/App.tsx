@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react';
 
+enum BoxType {
+  MOOF = "moof",
+  TRAF = "traf",
+  MDAT = "mdat",
+}
 
-interface Box {
+interface BasicBox {
   size: number;
   type: string;
   offset: number;
 }
 
-interface BoxWithChildren extends Box {
-  children: Box[];
+interface BoxWithChildren extends BasicBox {
+  children?: Box[];
 }
+
+interface BoxWithData extends BasicBox {
+  data?: string;
+}
+
+type Box = BoxWithChildren | BoxWithData;
+
 
 function parseData(data: ArrayBuffer) {
   const view = new DataView(data);
@@ -21,13 +33,15 @@ function parseData(data: ArrayBuffer) {
   console.log('boxes:', boxes);
 }
 
-function parseBoxes(view:DataView, offset:number, end:number) {
+function parseBoxes(view: DataView, offset: number, end: number) {
   const boxes: Box[] = [];
   let i = offset;
 
   while (i < end) {
     const box = parseBox(view, i);
+
     boxes.push(box);
+    
     i += box.size;
   }
 
@@ -35,9 +49,10 @@ function parseBoxes(view:DataView, offset:number, end:number) {
 }
 
 function parseBox(view: DataView, offset: number) {
-  const size = view.getUint32(offset);
+  const size = view.getUint32(offset); // first 4 bytes represent size
   let type = "";
 
+  // next 4 bytes represent type
   for (let i = 0; i < 4; i++) {
     type += String.fromCharCode(view.getUint8(offset + 4 + i));
   }
@@ -57,13 +72,8 @@ function App() {
   
 	useEffect(() => {      
 	  fetch('text0.mp4')
-      .then(result => {
-        return result.arrayBuffer();
-      })
-      .then((result) => {
-        console.log(result);
-        setData(result);
-      })
+      .then(r => r.arrayBuffer())
+      .then(setData)
       .catch((err) => {
         console.error(err);
         setError(err.message);
