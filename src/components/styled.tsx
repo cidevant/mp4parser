@@ -7,11 +7,12 @@ interface BoxTypeSpanProps {
 export const BoxTypeSpan = styled.span<BoxTypeSpanProps>`
   display: inline-block;
   font-weight: bold;
-  background-color: #FFA029;
+  background-color: #9bff29;
   color: black;
   padding: 2px 5px;
 
   ${(props) => {
-    return (props.type === 'moof' || props.type === 'traf' || props.type === 'mdat') && `background-color: red;`;
+    if (props.type === 'moof' || props.type === 'traf') return `background-color: red;`;
+    if (props.type === 'mdat') return `background-color: yellow;`;
   }}
 `;
