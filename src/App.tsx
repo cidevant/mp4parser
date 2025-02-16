@@ -33,16 +33,16 @@ function parseData(data: ArrayBuffer) {
   console.log('boxes:', boxes);
 }
 
+// Parses major boxes (without nesting)
 function parseBoxes(view: DataView, offset: number, end: number) {
   const boxes: Box[] = [];
-  let i = offset;
 
-  while (i < end) {
-    const box = parseBox(view, i);
+  while (offset < end) {
+    const box = parseBox(view, offset);
 
     boxes.push(box);
     
-    i += box.size;
+    offset += box.size;
   }
 
   return boxes;
