@@ -13,30 +13,32 @@ function parseData(data: ArrayBuffer) {
   const boxes: Box[] = [];
   const boxDefinitionSize = 8; // 4 size, 4 type
 
-  for (let i = 0; i < length; i++) {
-    result[i] = view.getUint8(i);
-  }
 
-  const sizeOf1Box = view.getUint32(0);
-
-  let typeOf1Box = "";
-
-  for (let index = 0; index < 4; index++) {
-    typeOf1Box += String.fromCharCode(view.getUint8(4 + index));
-  }
-
-  const box: Box = {
-    size: sizeOf1Box,
-    type: typeOf1Box,
-    offset: 0,
-  };
-
-  boxes.push(box);
+  boxes.push(parseBox(view, 0));
+  boxes.push(parseBox(view, 8));
+  boxes.push(parseBox(view, 16));
 
   console.log('boxes:', boxes);
   
 
   return result;
+}
+
+function parseBox(view: DataView, offset: number) {
+  const size = view.getUint32(offset);
+  let type = "";
+
+  for (let i = 0; i < 4; i++) {
+    type += String.fromCharCode(view.getUint8(offset + 4 + i));
+  }
+
+  const box: Box = {
+    size,
+    type,
+    offset,
+  };
+
+  return box;
 }
 
 function App() {
