@@ -29,6 +29,7 @@ function parseBoxes(view: DataView, offset: number, end: number): Box[] {
     let box = parseBox(view, offset) as Box;
 
     switch (box.type) {
+      // With children
       case BoxType.MOOF:
       case BoxType.TRAF: {
         const children = parseBoxes(view, offset + boxDefinitionSize, offset + box.size);
@@ -36,15 +37,16 @@ function parseBoxes(view: DataView, offset: number, end: number): Box[] {
       }
       break;
       
+      // With XML data
       case BoxType.MDAT: {
-        const data = new Uint8Array(view.buffer, offset + boxDefinitionSize, box.size - boxDefinitionSize);
-        box = { ...box, xml: new TextDecoder('utf-8').decode(data) } as BoxWithXMLData;
+        const xmlData = new Uint8Array(view.buffer, offset + boxDefinitionSize, box.size - boxDefinitionSize);
+        box = { ...box, xml: new TextDecoder('utf-8').decode(xmlData) } as BoxWithXMLData;
       }
       break;
 
+      // With data
       default: {
         const data: ArrayBuffer = view.buffer.slice(offset + boxDefinitionSize, offset + box.size);
-        
         box = { ...box, data } as BoxWithData;
       }
       break;
