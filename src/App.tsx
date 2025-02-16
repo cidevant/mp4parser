@@ -1,6 +1,6 @@
 import React from 'react';
 import { useData } from './hooks/data';
-import Boxes from './components/Boxes';
+import BoxChildren from './components/Boxes/BoxChildren';
 
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
 		<div className="App">
       {error && <p>{error}</p>}
       <h2>Box Structure:</h2>
-      {data.length > 0 && <Boxes boxes={data} /> }
+      {data.length > 0 && <BoxChildren boxes={data} /> }
 		</div>
 	);
 }

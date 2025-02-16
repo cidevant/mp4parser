@@ -1,14 +1,23 @@
-import React from 'react';
-import { BoxWithXMLData } from '../../../types';
+import React from "react";
+import { BoxWithXMLData } from "../../../types";
 
-
-interface BoxXMLProps {
-  box: BoxWithXMLData
+interface BoxWithXMLDataProps {
+  box: BoxWithXMLData;
+  depth?: number;
 }
 
-const BoxXML: React.FC<BoxXMLProps> = ({ box }) => {
+const BoxXML: React.FC<BoxWithXMLDataProps> = ({ box, depth = 0 }) => {
   return (
-    <div>BoxXML</div>
+    <li style={{ marginLeft: depth * 20 }}>
+      <span>
+        {box.type} ({box.size} bytes, offset: {box.offset})
+      </span>
+      {box.xml && (
+        <div style={{ marginLeft: 20 }}>
+          <pre>{box.xml}</pre>
+        </div>
+      )}
+    </li>
   );
 };
 

@@ -1,14 +1,24 @@
-import React from 'react';
-import { BoxWithData } from '../../../types';
-
+import React from "react";
+import { BoxWithData } from "../../../types";
 
 interface BoxDataProps {
-  box: BoxWithData
+  box: BoxWithData;
+  depth?: number;
 }
 
-const BoxData: React.FC<BoxDataProps> = ({ box }) => {
+const BoxData: React.FC<BoxDataProps> = ({ box, depth = 0 }) => {
+  console.log(depth);
+  
+  
   return (
-    <div>BoxData</div>
+    <li style={{ marginLeft: depth * 20 }}>
+      <span>
+        {box.type} ({box.size} bytes, offset: {box.offset})
+      </span>
+      <div>
+        {/* {box.data} */}
+      </div>
+    </li>
   );
 };
 
