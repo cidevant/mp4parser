@@ -1,18 +1,39 @@
 import React, { useEffect, useState } from 'react';
 
+interface Box {
+  size: number;
+  type: string;
+  offset: number;
+}
+
 function parseData(data: ArrayBuffer) {
   const view = new DataView(data);
   const length = view.byteLength;
   const result = new Uint8Array(length);
+  const boxes: Box[] = [];
+  const boxDefinitionSize = 8; // 4 size, 4 type
 
   for (let i = 0; i < length; i++) {
     result[i] = view.getUint8(i);
   }
 
   const sizeOf1Box = view.getUint32(0);
-  const typeOf1Box = view.getUint32(4);
 
-  console.log('sizeOf1Box:', sizeOf1Box, typeOf1Box);
+  let typeOf1Box = "";
+
+  for (let index = 0; index < 4; index++) {
+    typeOf1Box += String.fromCharCode(view.getUint8(4 + index));
+  }
+
+  const box: Box = {
+    size: sizeOf1Box,
+    type: typeOf1Box,
+    offset: 0,
+  };
+
+  boxes.push(box);
+
+  console.log('boxes:', boxes);
   
 
   return result;
