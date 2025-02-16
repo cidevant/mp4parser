@@ -1,39 +1,34 @@
 import React from 'react';
 import { Box, BoxWithChildren, BoxWithData, BoxWithXMLData } from '../../types';
 import styled from 'styled-components'
+import BoxChildren from './BoxChildren';
+import BoxData from './BoxData';
+import BoxXML from './BoxXML';
 
 interface BoxesProps {
   boxes: Box[];
   depth?: number;
 }
 
-const Boxes: React.FC<BoxesProps> = ({ boxes, depth = 0 }) => {
+const Boxes: React.FC<BoxesProps> = ({ boxes }) => {
+
   return (
-    <ul style={{ marginLeft: depth * 20 }}>
+    <>
       {boxes.map((box, index) => (
-        <li key={index}>
-          <span>
-            {box.type} ({box.size} bytes, offset: {box.offset})
-
+        <div key={index} >
             {"data" in box && (box as BoxWithData).data.byteLength > 0 && (
-              <DataContainer>data - {box.data.byteLength}</DataContainer>
+              <BoxData box={box as BoxWithData} />
             )}
+            {"children" in box && (box as BoxWithChildren).children.length > 0 && (
+              <BoxChildren box={box as BoxWithChildren} />
+            )}
+            {"xml" in box && (box as BoxWithXMLData).xml.length > 0 && (
+              <BoxXML box={box as BoxWithXMLData} />
+            )}
+        </div>
 
-          </span>
-
-
-          {"children" in box && (box as BoxWithChildren).children.length > 0 && (
-            <Boxes boxes={(box as BoxWithChildren).children} depth={depth + 1} />
-          )}
-
-          {"xml" in box && (box as BoxWithXMLData).xml.length > 0 && (
-            <div>
-              {box.xml}
-            </div>
-          )}
-        </li>
       ))}
-    </ul>
+    </>
   );
 };
 
