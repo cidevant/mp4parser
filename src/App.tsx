@@ -16,11 +16,11 @@ interface BoxWithChildren extends BasicBox {
   children?: Box[];
 }
 
-interface BoxWithData extends BasicBox {
+interface BoxWithXMLData extends BasicBox {
   data?: string;
 }
 
-type Box = BasicBox | BoxWithChildren | BoxWithData;
+type Box = BasicBox | BoxWithChildren | BoxWithXMLData;
 
 
 function parseData(data: ArrayBuffer): Box[] {
@@ -53,7 +53,7 @@ function parseBoxes(view: DataView, offset: number, end: number): Box[] {
       
       case BoxType.MDAT: {
         const data = new Uint8Array(view.buffer, offset + boxDefinitionSize, box.size - boxDefinitionSize);
-        box = { ...box, data: new TextDecoder().decode(data) } as BoxWithData;
+        box = { ...box, data: new TextDecoder('utf-8').decode(data) } as BoxWithXMLData;
       }
       break;
     }
