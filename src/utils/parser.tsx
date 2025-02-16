@@ -71,7 +71,9 @@ function parseBoxes(view: DataView, offset: number, end: number): Box[] {
 function parseBox(view: DataView, offset: number): Box {
   return {
     offset,
+    // first 4 bytes is size value
     size: view.getUint32(offset),
+    // next 4 bytes is type value
     type: new TextDecoder('utf-8').decode(new Uint8Array(view.buffer, offset + 4, 4)),
   } as Box;
 }
