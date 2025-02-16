@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { fetchData } from "./utils/index";
 
 function App() {
-	const [boxes, setBoxes] = useState<ArrayBuffer>();
+	const [data, setData] = useState<ArrayBuffer>();
 	const [error, setError] = useState<string>("");
   
-	useEffect(() => {
-      console.log("useEffect");
-      
-	  // fetchData()
-    //     .then((result) => {
-    //       console.log(result);
-    //       setBoxes(result);
-    //     })
-    //     .catch((err) => {
-    //       console.error(err);
-    //       setError(err.message);
-    //     });
-	}, [boxes]);
-
-  console.log("boxes", boxes);
+	useEffect(() => {      
+	  fetch('text0.mp4')
+      .then(result => {
+        return result.arrayBuffer();
+      })
+      .then((result) => {
+        console.log(result);
+        setData(result);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(err.message);
+      });
+	}, []);
   
 
 	return (
 		<div className="App">
 			<h1>Fetch Data</h1>
+      {error && <p>{error}</p>}
 		</div>
 	);
 }
