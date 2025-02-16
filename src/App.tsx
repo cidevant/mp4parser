@@ -48,6 +48,7 @@ function parseBoxes(view: DataView, offset: number, end: number) {
   return boxes;
 }
 
+// Parses 8 bytes of data to get box size and type
 function parseBox(view: DataView, offset: number) {
   const size = view.getUint32(offset); // first 4 bytes represent size
   let type = "";
