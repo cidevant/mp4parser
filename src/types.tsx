@@ -1,7 +1,7 @@
 export enum BoxType {
   MOOF = "moof", // box with children
   TRAF = "traf", // box with children
-  MDAT = "mdat", // box with data
+  MDAT = "mdat", // box with xml data
 }
 
 export interface BasicBox {
@@ -19,7 +19,7 @@ export interface BoxWithData extends BasicBox {
 }
 
 export interface BoxWithXMLData extends BoxWithData {
-  xml?: string;
+  xml: string;
 }
 
-export type Box = BoxWithChildren | BoxWithData;
+export type Box = BoxWithChildren | BoxWithData | BoxWithXMLData;
