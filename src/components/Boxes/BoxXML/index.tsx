@@ -1,5 +1,6 @@
 import React from "react";
 import { BoxWithXMLData } from "../../../types";
+import { BoxTypeSpan } from "../../styled";
 
 interface BoxWithXMLDataProps {
   box: BoxWithXMLData;
@@ -10,7 +11,7 @@ const BoxXML: React.FC<BoxWithXMLDataProps> = ({ box, depth = 0 }) => {
   return (
     <li style={{ marginLeft: depth * 20 }}>
       <span>
-        {box.type} ({box.size} bytes, offset: {box.offset})
+        <BoxTypeSpan type={box.type}>{box.type.toUpperCase()}</BoxTypeSpan> (length: {box.size} bytes, offset: {box.offset})
       </span>
       {box.xml && (
         <div style={{ marginLeft: 20 }}>

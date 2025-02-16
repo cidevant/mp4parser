@@ -2,6 +2,7 @@ import React from "react";
 import { Box, BoxWithChildren, BoxType } from "../../../types";
 import BoxData from "../BoxData";
 import BoxXML from "../BoxXML";
+import { BoxTypeSpan } from "../../styled";
 
 interface BoxWithChildrenProps {
   boxes: Box[];
@@ -18,7 +19,7 @@ const BoxChildren: React.FC<BoxWithChildrenProps> = ({ boxes, depth = 0 }) => {
           return (
             <li key={idx}>
               <span>
-                {box.type} ({box.size} bytes, offset: {box.offset})
+                <BoxTypeSpan type={box.type}>{box.type.toUpperCase()}</BoxTypeSpan> (length: {box.size} bytes, offset: {box.offset})
               </span>
               <BoxChildren boxes={childrenBox.children} depth={depth} />
             </li>

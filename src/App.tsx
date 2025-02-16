@@ -8,8 +8,9 @@ function App() {
 
 	return (
 		<div className="App">
+      <img src="./data_structure_logic.jpg" width="1000" alt="Data structure logic" />
       {error && <p>{error}</p>}
-      <h2>Box Structure:</h2>
+      <h2>Boxes Structure:</h2>
       {data.length > 0 && <BoxChildren boxes={data} /> }
 		</div>
 	);
