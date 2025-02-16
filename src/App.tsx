@@ -14,19 +14,24 @@ interface BoxWithChildren extends Box {
 function parseData(data: ArrayBuffer) {
   const view = new DataView(data);
   const length = view.byteLength;
-  const result = new Uint8Array(length);
-  const boxes: Box[] = [];
   const boxDefinitionSize = 8; // 4 size, 4 type
 
-
-  boxes.push(parseBox(view, 0));
-  boxes.push(parseBox(view, 8));
-  boxes.push(parseBox(view, 16));
+  const boxes: Box[] = parseBoxes(view, 0, length);
 
   console.log('boxes:', boxes);
-  
+}
 
-  return result;
+function parseBoxes(view:DataView, offset:number, end:number) {
+  const boxes: Box[] = [];
+  let i = offset;
+
+  while (i < end) {
+    const box = parseBox(view, i);
+    boxes.push(box);
+    i += box.size;
+  }
+
+  return boxes;
 }
 
 function parseBox(view: DataView, offset: number) {
@@ -38,9 +43,9 @@ function parseBox(view: DataView, offset: number) {
   }
 
   const box: Box = {
+    offset,
     size,
     type,
-    offset,
   };
 
   return box;
