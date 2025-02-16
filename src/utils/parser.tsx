@@ -1,4 +1,4 @@
-import { Box, BoxWithChildren, BoxWithXMLData, BoxType } from "../types";
+import { Box, BoxWithChildren, BoxWithData, BoxWithXMLData, BoxType } from "../types";
 
 /**
  * Parses ArrayBuffer and creates tree structure of boxes
@@ -8,12 +8,8 @@ import { Box, BoxWithChildren, BoxWithXMLData, BoxType } from "../types";
  */
 export function parseData(data: ArrayBuffer): Box[] {
   const view = new DataView(data);
-  const length = view.byteLength;
-  const boxes: Box[] = parseBoxes(view, 0, length);
 
-  console.log('Box[]:', boxes);
-
-  return boxes;
+  return parseBoxes(view, 0,  view.byteLength) as Box[];
 }
 
 
@@ -42,7 +38,14 @@ function parseBoxes(view: DataView, offset: number, end: number): Box[] {
       
       case BoxType.MDAT: {
         const data = new Uint8Array(view.buffer, offset + boxDefinitionSize, box.size - boxDefinitionSize);
-        box = { ...box, data: new TextDecoder('utf-8').decode(data) } as BoxWithXMLData;
+        box = { ...box, xml: new TextDecoder('utf-8').decode(data) } as BoxWithXMLData;
+      }
+      break;
+
+      default: {
+        const data: ArrayBuffer = view.buffer.slice(offset + boxDefinitionSize, offset + box.size);
+        
+        box = { ...box, data } as BoxWithData;
       }
       break;
     }

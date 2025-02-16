@@ -14,9 +14,12 @@ export interface BoxWithChildren extends BasicBox {
   children: Box[];
 }
 
-export interface BoxWithXMLData extends BasicBox {
-  data: string;
+export interface BoxWithData extends BasicBox {
+  data: ArrayBuffer;
 }
 
-export type Box = BoxWithChildren | BoxWithXMLData;
+export interface BoxWithXMLData extends BoxWithData {
+  xml?: string;
+}
 
+export type Box = BoxWithChildren | BoxWithData;
