@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 enum BoxType {
-  MOOF = "moof",
-  TRAF = "traf",
-  MDAT = "mdat",
+  MOOF = "moof", // box with children
+  TRAF = "traf", // box with children
+  MDAT = "mdat", // box with data
 }
 
 interface BasicBox {
