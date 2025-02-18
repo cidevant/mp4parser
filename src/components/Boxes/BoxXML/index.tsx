@@ -1,42 +1,36 @@
 import React from "react";
 import { BoxWithXMLData } from "../../../types";
-import { BoxTypeSpan, BoxImageWrapper, BoxImage } from "../../styled";
+import { BoxImageWrapper, BoxImage, BoxDataXML, BoxItem } from "../../styled";
+import BoxHeader from "../BoxHeader";
 
 interface BoxWithXMLDataProps {
   box: BoxWithXMLData;
-  depth?: number;
 }
 
-const BoxXML: React.FC<BoxWithXMLDataProps> = ({ box, depth = 0 }) => {
-  const images = [];
-  
-  for (const image of box.images) {
-    images.push(
-      <BoxImage 
-        key={image.id} 
-        src={`data:image/${image.type.toLowerCase()};${image.encoding.toLowerCase()}, ${image.data}`} 
-        alt={`img-${image.id}`} 
-      />
-    );
-  }
-  
+const BoxXML: React.FC<BoxWithXMLDataProps> = ({ box }) => {
   return (
-    <li style={{ marginLeft: depth * 20 }}>
-      <span>
-        <BoxTypeSpan type={box.type}>{box.type.toUpperCase()}</BoxTypeSpan> (length: {box.size} bytes, offset: {box.offset})
-      </span>
+    <BoxItem >
+      <BoxHeader box={box} />
+
       {box.xml && (
-        <pre>{box.xml}</pre>
+        <BoxDataXML>{box.xml}</BoxDataXML>
       )}
-      {images && images.length > 0 && (
+
+      {box.images && box.images.length > 0 && (
         <>
           <h3>BONUS 2: Images from XML</h3>
           <BoxImageWrapper>
-            {images}
+            {box.images.map((image) => (
+              <BoxImage 
+                key={image.id} 
+                src={`data:image/${image.type.toLowerCase()};${image.encoding.toLowerCase()}, ${image.data}`} 
+                alt={`img-${image.id}`} 
+              />
+            ))}
           </BoxImageWrapper>
         </>
       )}
-    </li>
+    </BoxItem>
   );
 };
 

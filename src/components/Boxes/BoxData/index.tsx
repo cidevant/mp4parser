@@ -1,13 +1,13 @@
 import React from "react";
 import { BoxWithData } from "../../../types";
-import { BoxTypeSpan } from "../../styled";
+import { BoxItem, BoxDataContainer } from "../../styled";
+import BoxHeader from "../BoxHeader";
 
 interface BoxDataProps {
   box: BoxWithData;
-  depth?: number;
 }
 
-const BoxData: React.FC<BoxDataProps> = ({ box, depth = 0 }) => {  
+const BoxData: React.FC<BoxDataProps> = ({ box }) => {  
   let data = "";
 
   if (box.data instanceof ArrayBuffer) {
@@ -18,16 +18,13 @@ const BoxData: React.FC<BoxDataProps> = ({ box, depth = 0 }) => {
     }
   }
 
-
   return (
-    <li style={{ marginLeft: depth * 20 }}>
-      <span>
-        <BoxTypeSpan type={box.type}>{box.type.toUpperCase()}</BoxTypeSpan> (length: {box.size} bytes, offset: {box.offset})
-      </span>
-      <div style={{ backgroundColor: "#f0f0f0", padding: 5 }}>
+    <BoxItem>
+      <BoxHeader box={box} />
+      <BoxDataContainer>
         data(Uint8): {data}
-      </div>
-    </li>
+      </BoxDataContainer>
+    </BoxItem>
   );
 };
 

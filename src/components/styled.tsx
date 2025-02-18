@@ -1,5 +1,31 @@
 import styled from 'styled-components';
 
+// Box List
+
+interface BoxListProps {
+  depth?: number;
+};
+
+export const BoxList = styled('div').withConfig({
+  shouldForwardProp: (prop) => prop !== 'depth',
+})<BoxListProps>`
+  ${(props) => {
+    if (props.depth) return `margin-left: ${props.depth * 30}px;`;
+  }}
+`;
+
+export const BoxItem = styled.div`
+  padding-top: 25px;
+`;
+
+// Box Header
+
+export const BoxHeaderWrapper = styled.div`
+  border: 1px dashed #666;
+  padding: 5px;
+  display: flex;
+`;
+
 interface BoxTypeSpanProps {
   type?: string;
 };
@@ -17,11 +43,35 @@ export const BoxTypeSpan = styled.span<BoxTypeSpanProps>`
   }}
 `;
 
+export const BoxLengthSpan = styled.span`
+  display: inline-block;
+  margin-left: 10px;
+  padding: 2px 5px;
+  background-color: #ddd;
+`;
+
+export const BoxOffsetSpan = styled.span`
+  display: inline-block;
+  margin-left: 10px;
+  padding: 2px 5px;
+  background-color: #ddd;
+
+`;
+
+// Box Data
+
+export const BoxDataContainer = styled.div`
+  background-color: #eee;
+  padding: 5px;
+`;
+
+// MDAT
+
 export const BoxImageWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: start;
   padding: 40px;
   background-color: #eee;
 `;
@@ -36,3 +86,10 @@ export const BoxImage = styled.img`
     transform: scale(1.2);
   }
 `;
+
+export const BoxDataXML = styled.pre`
+  padding: 10px;
+  font-weight: bold;
+`;
+
+

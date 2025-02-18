@@ -1,8 +1,9 @@
 import React from "react";
-import { Box, BoxWithChildren, BoxType } from "../../../types";
+import { Box, BoxWithChildren, BoxType, BoxWithXMLData, BoxWithData } from "../../../types";
 import BoxData from "../BoxData";
 import BoxXML from "../BoxXML";
-import { BoxTypeSpan } from "../../styled";
+import { BoxList, BoxItem } from "../../styled";
+import BoxHeader from "../BoxHeader";
 
 interface BoxWithChildrenProps {
   boxes: Box[];
@@ -11,28 +12,26 @@ interface BoxWithChildrenProps {
 
 const BoxChildren: React.FC<BoxWithChildrenProps> = ({ boxes, depth = 0 }) => {
   return (
-    <ul style={{ marginLeft: depth * 20 }}>
+    <BoxList depth={depth}>
       {boxes.map((box, idx) => {
         if ("children" in box) {
           const childrenBox = box as BoxWithChildren;
 
           return (
-            <li key={idx}>
-              <span>
-                <BoxTypeSpan type={box.type}>{box.type.toUpperCase()}</BoxTypeSpan> (length: {box.size} bytes, offset: {box.offset})
-              </span>
-              <BoxChildren boxes={childrenBox.children} depth={depth} />
-            </li>
+            <BoxItem key={idx}>
+              <BoxHeader box={box} />
+              <BoxChildren boxes={childrenBox.children} depth={depth +  1} />
+            </BoxItem>
           );
         }
 
         if (box.type === BoxType.MDAT) {
-          return <BoxXML key={idx} box={box as any} depth={depth} />;
+          return <BoxXML key={idx} box={box as BoxWithXMLData} />;
         }
 
-        return <BoxData key={idx} box={box} depth={depth} />;
+        return <BoxData key={idx} box={box as BoxWithData} />;
       })}
-    </ul>
+    </BoxList>
   );
 };
 
