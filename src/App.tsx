@@ -12,6 +12,9 @@ function App() {
       {error && <p>{error}</p>}
       <h2>Boxes Structure:</h2>
       {data.length > 0 && <BoxChildren boxes={data} /> }
+      <h3>BONUS 1:</h3>
+      <pre>Which problem can occur if the content of the MDAT box is very large?</pre>
+      <p>Problem in my implementation can cause memory issues on devices with limited resources, because I am loading/parsing content at once.</p>
 		</div>
 	);
 }

@@ -32,7 +32,7 @@ const BoxXML: React.FC<BoxWithXMLDataProps> = ({ box, depth = 0 }) => {
       )}
       {images && images.length > 0 && (
         <>
-          <h3>Images from XML</h3>
+          <h3>BONUS 2: Images from XML</h3>
           {images}
         </>
       )}
