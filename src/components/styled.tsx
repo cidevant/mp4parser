@@ -27,7 +27,12 @@ export const BoxImageWrapper = styled.div`
 `;
 
 export const BoxImage = styled.img`
-  border: 10px solid black;
+  border: 10px solid #666;
   margin: 20px;
   width: 300px;
+
+  &:hover {
+    border-color: red;
+    transform: scale(1.2);
+  }
 `;
