@@ -40,7 +40,9 @@ function parseBoxes(view: DataView, offset: number, end: number): Box[] {
       // With XML data
       case BoxType.MDAT: {
         const xmlData = new Uint8Array(view.buffer, offset + boxDefinitionSize, box.size - boxDefinitionSize);
-        box = { ...box, xml: new TextDecoder('utf-8').decode(xmlData) } as BoxWithXMLData;
+        const xmlString = new TextDecoder('utf-8').decode(xmlData);
+        const images = parseImages(xmlString);
+        box = { ...box, xml: xmlString, images } as BoxWithXMLData;
       }
       break;
 
@@ -60,6 +62,25 @@ function parseBoxes(view: DataView, offset: number, end: number): Box[] {
   return boxes;
 }
 
+
+/**
+ * Parses images from XML string
+ *
+ * @param {string} xmlString xml string to parse
+ * @returns {string[]} array of images 
+ */
+function parseImages(xmlString: string): string[] {
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+  const imagesXML = xmlDoc.getElementsByTagName('smpte:image');  
+  const images:string[] = [];
+
+  for (let index = 0; index < imagesXML.length; index++) {
+    images.push(imagesXML[index].firstChild?.textContent?.trim() as string);
+  }
+  
+  return images;
+}
 
 /**
  * Parses a Box from the DataView
