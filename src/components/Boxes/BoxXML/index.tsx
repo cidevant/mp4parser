@@ -8,6 +8,20 @@ interface BoxWithXMLDataProps {
 }
 
 const BoxXML: React.FC<BoxWithXMLDataProps> = ({ box, depth = 0 }) => {
+  const images = [];
+  
+  if ("images" in box && box.images?.length > 0) {
+    images.push((
+      <ul>
+        {box.images.map((image, idx) => (
+          <li key={idx}>
+            <img src={`data:image/png;base64, ${image}`} width="400" alt={`img ${idx}`} />
+          </li>
+        ))}
+      </ul>
+    ));
+  }
+  
   return (
     <li style={{ marginLeft: depth * 20 }}>
       <span>
@@ -17,6 +31,12 @@ const BoxXML: React.FC<BoxWithXMLDataProps> = ({ box, depth = 0 }) => {
         <div style={{ marginLeft: 20 }}>
           <pre>{box.xml}</pre>
         </div>
+      )}
+      {images && images.length > 0 && (
+        <>
+          <h3>Images from XML</h3>
+          {images}
+        </>
       )}
     </li>
   );
