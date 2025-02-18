@@ -8,7 +8,7 @@ function App() {
 
 	return (
 		<div className="App">
-      <img src="./data_structure_logic.jpg" width="1000" alt="Data structure logic" />
+      <img src="./data_structure_logic.jpg" width="800" alt="Data structure logic" />
       {error && <p>{error}</p>}
       <h3>BONUS 1:</h3>
       <pre>Which problem can occur if the content of the MDAT box is very large?</pre>
