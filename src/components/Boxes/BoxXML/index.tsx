@@ -1,6 +1,6 @@
 import React from "react";
 import { BoxWithXMLData } from "../../../types";
-import { BoxTypeSpan } from "../../styled";
+import { BoxTypeSpan, BoxImageWrapper, BoxImage } from "../../styled";
 
 interface BoxWithXMLDataProps {
   box: BoxWithXMLData;
@@ -12,13 +12,11 @@ const BoxXML: React.FC<BoxWithXMLDataProps> = ({ box, depth = 0 }) => {
   
   if ("images" in box && box.images?.length > 0) {
     images.push((
-      <ul>
+      <BoxImageWrapper>
         {box.images.map((image, idx) => (
-          <li key={idx}>
-            <img src={`data:image/png;base64, ${image}`} width="400" alt={`img ${idx}`} />
-          </li>
+            <BoxImage src={`data:image/png;base64, ${image}`} width="400" alt={`img ${idx}`} />
         ))}
-      </ul>
+      </BoxImageWrapper>
     ));
   }
   

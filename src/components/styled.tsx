@@ -16,3 +16,15 @@ export const BoxTypeSpan = styled.span<BoxTypeSpanProps>`
     if (props.type === 'mdat') return `background-color: yellow;`;
   }}
 `;
+
+export const BoxImageWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 40px;
+  background-color: #ddd;
+`;
+
+export const BoxImage = styled.img`
+  border: 1px solid black;
+  margin: 20px;
+`;
