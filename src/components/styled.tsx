@@ -15,7 +15,7 @@ export const BoxList = styled('div').withConfig({
 `;
 
 export const BoxItem = styled.div`
-  padding-top: 25px;
+  padding-top: 10px;
 `;
 
 // Box Header
@@ -43,19 +43,11 @@ export const BoxTypeSpan = styled.span<BoxTypeSpanProps>`
   }}
 `;
 
-export const BoxLengthSpan = styled.span`
+export const BoxHeaderInfoSpan = styled.span`
   display: inline-block;
   margin-left: 10px;
   padding: 2px 5px;
   background-color: #ddd;
-`;
-
-export const BoxOffsetSpan = styled.span`
-  display: inline-block;
-  margin-left: 10px;
-  padding: 2px 5px;
-  background-color: #ddd;
-
 `;
 
 // Box Data
@@ -63,6 +55,7 @@ export const BoxOffsetSpan = styled.span`
 export const BoxDataContainer = styled.div`
   background-color: #eee;
   padding: 5px;
+  margin-top: 10px;
 `;
 
 // MDAT
@@ -89,12 +82,12 @@ export const BoxImage = styled.img`
 
 export const BoxDataXML = styled.pre`
   padding: 10px;
-  font-weight: bold;
-  white-space: pre-wrap;       /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  background-color: #eee;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
 `;
 
 

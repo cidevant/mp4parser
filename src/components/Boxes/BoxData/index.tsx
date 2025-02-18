@@ -1,6 +1,6 @@
 import React from "react";
 import { BoxWithData } from "../../../types";
-import { BoxItem, BoxDataContainer } from "../../styled";
+import { BoxItem } from "../../styled";
 import BoxHeader from "../BoxHeader";
 
 interface BoxDataProps {
@@ -20,10 +20,7 @@ const BoxData: React.FC<BoxDataProps> = ({ box }) => {
 
   return (
     <BoxItem>
-      <BoxHeader box={box} />
-      <BoxDataContainer>
-        data(Uint8): {data}
-      </BoxDataContainer>
+      <BoxHeader box={box} data={data}/>
     </BoxItem>
   );
 };

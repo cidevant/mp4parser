@@ -1,23 +1,29 @@
 import React from "react";
 import { Box } from "../../../types";
-import { BoxHeaderWrapper, BoxTypeSpan, BoxLengthSpan, BoxOffsetSpan } from "../../styled";
+import { BoxHeaderWrapper, BoxTypeSpan, BoxHeaderInfoSpan } from "../../styled";
 
 interface BoxHeaderProps {
   box: Box;
+  data?: string;
 }
 
-const BoxHeader: React.FC<BoxHeaderProps> = ({ box }) => {  
+const BoxHeader: React.FC<BoxHeaderProps> = ({ box, data = '' }) => {  
   return (
     <BoxHeaderWrapper>
       <BoxTypeSpan type={box.type}>
-          {box.type.toUpperCase()}
+        {box.type.toUpperCase()}
       </BoxTypeSpan>
-      <BoxLengthSpan>
-        size: {box.size} bytes
-      </BoxLengthSpan>
-      <BoxOffsetSpan>
-        offset: {box.offset}
-      </BoxOffsetSpan>
+      <BoxHeaderInfoSpan>
+        <b>size:</b> {box.size} bytes
+      </BoxHeaderInfoSpan>
+      <BoxHeaderInfoSpan>
+        <b>offset:</b> {box.offset}
+      </BoxHeaderInfoSpan>
+      {data && (
+        <BoxHeaderInfoSpan>
+          <b>data(Uint8):</b> {data}
+        </BoxHeaderInfoSpan>
+      )}
     </BoxHeaderWrapper>
   );
 };
