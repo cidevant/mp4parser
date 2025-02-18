@@ -10,14 +10,10 @@ interface BoxWithXMLDataProps {
 const BoxXML: React.FC<BoxWithXMLDataProps> = ({ box, depth = 0 }) => {
   const images = [];
   
-  if ("images" in box && box.images?.length > 0) {
-    images.push((
-      <BoxImageWrapper>
-        {box.images.map((image, idx) => (
-            <BoxImage src={`data:image/png;base64, ${image}`} width="400" alt={`img ${idx}`} />
-        ))}
-      </BoxImageWrapper>
-    ));
+  for (const image of box.images) {
+    images.push(
+      <BoxImage key={image.id} src={`data:image/${image.type.toLowerCase()};${image.encoding.toLowerCase()}, ${image.data}`} width="400" alt={`img-${image.id}`} />
+    );
   }
   
   return (
@@ -33,7 +29,9 @@ const BoxXML: React.FC<BoxWithXMLDataProps> = ({ box, depth = 0 }) => {
       {images && images.length > 0 && (
         <>
           <h3>BONUS 2: Images from XML</h3>
-          {images}
+          <BoxImageWrapper>
+            {images}
+          </BoxImageWrapper>
         </>
       )}
     </li>

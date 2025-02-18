@@ -1,4 +1,4 @@
-import { Box, BoxWithChildren, BoxWithData, BoxWithXMLData, BoxType } from "../types";
+import { Box, BoxWithChildren, BoxWithData, BoxWithXMLData, BoxType, BoxImage } from "../types";
 
 /**
  * Parses ArrayBuffer and creates tree structure of boxes
@@ -69,14 +69,21 @@ function parseBoxes(view: DataView, offset: number, end: number): Box[] {
  * @param {string} xmlString xml string to parse
  * @returns {string[]} array of images 
  */
-function parseImages(xmlString: string): string[] {
+function parseImages(xmlString: string): BoxImage[] {
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
   const imagesXML = xmlDoc.getElementsByTagName('smpte:image');  
-  const images:string[] = [];
+  const images:BoxImage[] = [];
 
   for (let index = 0; index < imagesXML.length; index++) {
-    images.push(imagesXML[index].firstChild?.textContent?.trim() as string);
+    const image = imagesXML[index];
+
+    images.push({
+      data: image.firstChild?.textContent?.trim() || '',
+      type: imagesXML[index].getAttribute('imagetype') || '',
+      encoding: imagesXML[index].getAttribute('encoding') || '',
+      id: imagesXML[index].getAttribute('xml:id') || '',
+    } as BoxImage);
   }
   
   return images;

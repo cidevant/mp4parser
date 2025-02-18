@@ -20,7 +20,14 @@ export interface BoxWithData extends BasicBox {
 
 export interface BoxWithXMLData extends BoxWithData {
   xml: string;
-  images: string[];
+  images: BoxImage[];
+}
+
+export interface BoxImage {
+  id: string;
+  type: string;
+  encoding: string;
+  data: string;
 }
 
 export type Box = BoxWithChildren | BoxWithData | BoxWithXMLData;
