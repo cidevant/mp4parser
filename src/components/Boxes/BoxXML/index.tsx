@@ -12,7 +12,11 @@ const BoxXML: React.FC<BoxWithXMLDataProps> = ({ box, depth = 0 }) => {
   
   for (const image of box.images) {
     images.push(
-      <BoxImage key={image.id} src={`data:image/${image.type.toLowerCase()};${image.encoding.toLowerCase()}, ${image.data}`} width="400" alt={`img-${image.id}`} />
+      <BoxImage 
+        key={image.id} 
+        src={`data:image/${image.type.toLowerCase()};${image.encoding.toLowerCase()}, ${image.data}`} 
+        alt={`img-${image.id}`} 
+      />
     );
   }
   

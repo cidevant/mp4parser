@@ -20,11 +20,14 @@ export const BoxTypeSpan = styled.span<BoxTypeSpanProps>`
 export const BoxImageWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   padding: 40px;
-  background-color: #ddd;
+  background-color: #eee;
 `;
 
 export const BoxImage = styled.img`
-  border: 1px solid black;
+  border: 10px solid black;
   margin: 20px;
+  width: 300px;
 `;
