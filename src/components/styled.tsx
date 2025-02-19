@@ -2,16 +2,8 @@ import styled from 'styled-components';
 
 // Box List
 
-interface BoxListProps {
-  depth?: number;
-};
-
-export const BoxList = styled('div').withConfig({
-  shouldForwardProp: (prop) => prop !== 'depth',
-})<BoxListProps>`
-  ${(props) => {
-    if (props.depth) return `margin-left: ${props.depth * 30}px;`;
-  }}
+export const BoxList = styled.div`
+  margin-left: 30px;
 `;
 
 export const BoxItem = styled.div`

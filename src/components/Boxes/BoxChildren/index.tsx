@@ -7,12 +7,11 @@ import BoxHeader from "../BoxHeader";
 
 interface BoxWithChildrenProps {
   boxes: Box[];
-  depth?: number;
-}
+};
 
-const BoxChildren: React.FC<BoxWithChildrenProps> = ({ boxes, depth = 0 }) => {
+const BoxChildren: React.FC<BoxWithChildrenProps> = ({ boxes }) => {
   return (
-    <BoxList depth={depth}>
+    <BoxList>
       {boxes.map((box, idx) => {
         if ("children" in box) {
           const childrenBox = box as BoxWithChildren;
@@ -20,7 +19,7 @@ const BoxChildren: React.FC<BoxWithChildrenProps> = ({ boxes, depth = 0 }) => {
           return (
             <BoxItem key={idx}>
               <BoxHeader box={box} />
-              <BoxChildren boxes={childrenBox.children} depth={depth +  1} />
+              <BoxChildren boxes={childrenBox.children}  />
             </BoxItem>
           );
         }

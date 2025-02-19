@@ -6,6 +6,10 @@ import BoxChildren from './components/Boxes/BoxChildren';
 function App() {
   const { data, error } = useData();
 
+  if (data.length > 0) {
+    console.log(data);
+  }
+  
 	return (
 		<div className="App">
       <img src="./data_structure_logic.jpg" width="800" alt="Data structure logic" />
